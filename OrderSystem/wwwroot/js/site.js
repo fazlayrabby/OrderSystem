@@ -159,11 +159,40 @@ $(document).on("click", "#editOrderSubmit", function () {
         },
         error: function (xhr) {
 
-            //alert(xhr.responseText);
+            alert(xhr.responseText);
            
-            $('#createEditForm').empty();
+            //$('#createEditForm').empty();
+            //updateOrderList();
+            //alert("Successfull!");
+        }
+    });
+
+    
+
+});
+
+$(document).on("click", ".deleteOrder", function () {
+
+    var orderId = $(this).closest("tr").find(".orderId").text();
+
+   
+
+    $.ajax({
+        url: "/Order/Delete",
+        dataType: "json",
+        type: "POST",
+        cache: false,
+        data: { Id: orderId },
+        success: function (data) {
+
             updateOrderList();
             alert("Successfull!");
+
+
+        },
+        error: function (xhr) {
+
+            alert(xhr.responseText);
         }
     });
 
