@@ -1,0 +1,22 @@
+﻿@model IEnumerable<OrderSystem.Models.Order>
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td hidden class="orderId">
+            @Html.DisplayFor(modelItem => item.OrderId)
+        </td>
+        <td>@item.Product</td>
+        <th>@item.FirstName</th>
+        <td>@item.LastName</td>
+        <td>@item.Date.ToString("MM/dd/yyyy")</td>
+        <td>@item.State</td>
+        <td role="group">
+            <a href="#" class="editOrder"><i class="bi bi-pencil-square"></i>Edit</a>
+            <a href="#" class="deleteOrder"><i class="bi bi-trash"></i>Update</a>
+        </td>
+    </tr>
+}

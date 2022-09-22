@@ -1,0 +1,61 @@
+﻿@model IEnumerable<OrderSystem.Models.Order>
+@{
+    ViewData["Title"] = "Order Page";
+}
+
+
+
+<div class="container p-4">
+    <div class="card border-light mb-3" style="width:100%">
+        <div id="createEditForm">
+            
+        </div>
+
+        <div class="card-header">
+            <div class="row p-3">
+                <div class="col-10">
+                    <h4 class="text-dark">List of Order</h4>
+                </div>
+                <div class="col-2 text-end" id="createNew">
+                    <a class="btn btn-primary text-white" href="#"><i class="bi bi-plus-circle"></i>&nbsp; Create New</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table id="myTable" class="table table-bordered table-striped" style="width:100%">
+                <thead class="text-dark">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Date</th>
+                        <th>State</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                   <tbody id="orderlistTableId">
+                        @foreach (var item in Model)
+                        {
+                       <tr>
+                           <td hidden class="orderId">
+                               @Html.DisplayFor(modelItem => item.OrderId)
+                           </td>
+                           <td>@item.Product</td>
+                           <th>@item.FirstName</th>
+                           <td>@item.LastName</td>
+                           <td>@item.Date.ToString("MM/dd/yyyy")</td>
+                           <td>@item.State</td>
+                           <td role="group">
+                               <a href="#" class="editOrder"><i class="bi bi-pencil-square"></i>Edit</a>
+                               <a href="#" class="deleteOrder"><i class="bi bi-trash"></i>Update</a>
+                           </td>
+                       </tr>
+                        }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
