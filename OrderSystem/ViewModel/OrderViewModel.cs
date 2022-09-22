@@ -8,6 +8,7 @@ namespace OrderSystem.ViewModel
 {
     public class OrderViewModel 
     {
+        public int OrderId { get; set; }
         public string State { get; set; }
         public string Product { get; set; }
         public string FirstName { get; set; }

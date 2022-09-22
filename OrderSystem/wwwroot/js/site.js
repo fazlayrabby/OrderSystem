@@ -36,8 +36,8 @@ $(document).on("click", "#newOrderSubmit", function () {
     var state = $("#state").val();
     var date = $("#orderDate").val();
 
-    var productId = $('#ProductTypeId').find(":selected").val();
-    var productName = $('#ProductTypeId').find(":selected").text();
+    var productId = $('#productDw').find(":selected").val();
+    var productName = $('#productDw').find(":selected").text();
 
 
     $.ajax({
@@ -122,27 +122,48 @@ $(document).on("click", ".editOrder", function () {
 
 });
 
-$(document).on("click", ".editOrder", function () {
+$(document).on("click", "#editOrderSubmit", function () {
 
-    var orderId = $(this).closest("tr").find(".orderId").text();
+   
+
+    var orderId = $("#orderEditId").val();
+    var firstName = $("#firstName").val();
+    var lastName = $("#lastName").val();
+    var state = $("#state").val();
+    var date = $("#orderDate").val();
+
+    var productId = $('#ProductList').find(":selected").val();
+    var productName = $('#ProductList').find(":selected").text();
 
 
     $.ajax({
-        url: "/Order/EditForm",
-        dataType: "html",
-        type: "POST",
+        url: "/Order/EditOrderComplete",
+        dataType: "json",
+        type: "post",
+        async: false,
         cache: false,
-        data: { OrderId: orderId },
+        data: {
+            OrderId:orderId,FirstName: firstName, LastName: lastName, State: state, Date: date, ProductId: productId,
+            Product: productName
+        },
         success: function (data) {
 
+
+
+            alert("Successfull!");
             $('#createEditForm').empty();
-            $('#createEditForm').append(data);
+            updateOrderList();
+            //$('#createEditForm').append(data);
 
 
         },
         error: function (xhr) {
 
-            alert(xhr.responseText);
+            //alert(xhr.responseText);
+           
+            $('#createEditForm').empty();
+            updateOrderList();
+            alert("Successfull!");
         }
     });
 

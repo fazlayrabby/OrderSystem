@@ -35,7 +35,7 @@ namespace OrderSystem.Controllers
         public IActionResult CreateForm()
         {
             var model = new Order();
-            ViewBag.ProductTypeId = new SelectList(_context.Products, "ProductId", "ProductName");
+            ViewBag.ProductDw = new SelectList(_context.Products, "ProductId", "ProductName");
             return PartialView("_CreateForm", model);
         }
 
@@ -78,6 +78,45 @@ namespace OrderSystem.Controllers
             //ViewData["ProductList"] = _context.Products.ToList();
             //ViewData["ProductSelected"] = product;
             return PartialView("_EditForm", order);
+        }
+
+
+        public async Task<JsonResult> EditOrderComplete(OrderViewModel model)
+        {
+            var product = _context.Products.Where(p => p.ProductId == model.ProductId).FirstOrDefault();
+
+            var orderProductRemove = _context.OrderProducts.Where(op => op.OrderId == model.OrderId).FirstOrDefault();
+
+            var order = _context.Orders.Where(o=>o.OrderId==model.OrderId).FirstOrDefault();
+
+            order.FirstName = model.FirstName;
+            order.LastName = model.LastName;
+            order.Product = model.Product;
+            order.State = model.State;
+            order.Date = model.Date;
+
+            var Orpr = new List<OrderProduct>();
+
+            Orpr.Add(new OrderProduct { OrderId = order.OrderId, ProductId = product.ProductId });
+
+            order.OrderProduct = Orpr;
+
+            //var orderProduct = new OrderProduct(); 
+            //orderProduct.OrderId = order.OrderId;
+            //orderProduct.Order = order;
+            //orderProduct.Product = product;
+
+           
+            
+           _context.Update(order);
+            await _context.SaveChangesAsync();
+
+            _context.Remove(orderProductRemove);
+            await _context.SaveChangesAsync();
+            
+            var result = "Success!";
+
+            return Json(new { result = result });
         }
 
         public IActionResult AddedList()
